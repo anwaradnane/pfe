@@ -188,7 +188,7 @@ method = st.sidebar.selectbox("Sélectionnez une méthode", ("Méthode Chain Lad
 
 # Définition des images
 image_aaa = 'aaa.png'
-image_aaaa = 'aaaa.png'
+image_aaaa = 'aaaa.jpg'
 
 # Division de l'espace horizontal en deux colonnes
 col1, col2 = st.beta_columns(2)
