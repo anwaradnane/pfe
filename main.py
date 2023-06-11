@@ -1,6 +1,4 @@
-Bien sûr ! Voici le code modifié pour rendre tous les tableaux et les plots dynamiques et attrayants avec Streamlit :
 
-```python
 import streamlit as st
 import pandas as pd
 import numpy as np
