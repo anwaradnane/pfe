@@ -1,8 +1,11 @@
+Bien sûr ! Voici le code modifié pour rendre tous les tableaux et les plots dynamiques et attrayants avec Streamlit :
+
+```python
 import streamlit as st
 import pandas as pd
 import numpy as np
-import plotly.express as px
-import plotly.graph_objects as go
+import matplotlib.pyplot as plt
+import seaborn as sns
 from sklearn.linear_model import LinearRegression
 
 # Fonction pour le modèle de la méthode Chain Ladder
@@ -16,12 +19,10 @@ def chain_ladder_method():
 
     # Affichage du Triangle
     st.write("Triangle:")
-    fig = go.Figure(data=go.Heatmap(
-        z=Triangle.values,
-        x=Triangle.columns,
-        y=Triangle.index,
-        colorscale='Viridis'))
-    st.plotly_chart(fig)
+    st.write(Triangle)
+    fig, ax = plt.subplots(figsize=(12, 6))
+    Triangle.T.plot(ax=ax)
+    st.pyplot(fig)
 
     # Utilisation de Chain_Ladder
     facteurs = []
@@ -31,36 +32,25 @@ def chain_ladder_method():
 
     # Affichage des facteurs
     st.write("Facteurs:")
-    fig = go.Figure(data=go.Scatter(
-        x=range(1, len(facteurs)+1),
-        y=facteurs,
-        mode='lines+markers'))
-    fig.update_layout(
-        xaxis_title='Période du Développement',
-        yaxis_title='Facteurs')
-    st.plotly_chart(fig)
+    per_dev = np.array([(i+1) for i in range(9)])
+    fig, ax = plt.subplots(figsize=(12, 6))
+    ax.plot(per_dev, facteurs)
+    ax.set_xlabel('Période du Développement')
+    ax.set_ylabel('Facteurs')
+    st.pyplot(fig)
 
     # Plot des facteurs (Scatter après application de la régression linéaire)
     st.write("Plot des facteurs (régression linéaire):")
-    fig = go.Figure(data=go.Scatter(
-        x=range(1, len(facteurs)+1),
-        y=np.log(facteurs-1),
-        mode='markers'))
-    fig.update_layout(
-        title='Plot des facteurs',
-        xaxis_title='Période de Développement',
-        yaxis_title='Facteur')
-    fig.update_traces(marker=dict(size=8))
-    fig.add_trace(go.Scatter(
-        x=range(1, len(facteurs)+1),
-        y=model.predict(np.array(range(1, len(facteurs)+1)).reshape(-1, 1)),
-        mode='lines',
-        name='Régression linéaire'))
-    st.plotly_chart(fig)
+    fig, ax = plt.subplots(figsize=(12, 6))
+    ax.set_title('Plot des facteurs')
+    ax.set_xlabel('Période de Développement')
+    ax.set_ylabel('Facteur')
+    sns.regplot(x=per_dev, y=np.log(facteurs-1), ax=ax)
+    st.pyplot(fig)
 
     # Fitting du modèle
     model = LinearRegression()
-    model.fit(np.array(range(1, len(facteurs)+1)).reshape(-1, 1), np.log(facteurs-1))
+    model.fit(per_dev.reshape(-1, 1), np.log(facteurs-1))
     delta = np.array([(i+10) for i in range(101)])
     delta = np.exp(model.intercept_ + model.coef_ * delta) + 1
 
@@ -68,15 +58,77 @@ def chain_ladder_method():
     for i, col in enumerate(Triangle.columns[1:]):
         for j in range(i+1):
             Triangle[col].at[2021-j] = facteurs[i] * Triangle[str(int(col)-1)].at[2021-j]
-    
+
     # Affichage du Triangle complété
     st.write("Triangle complété:")
-    fig = go.Figure(data=go.Heatmap(
-        z=Triangle.values,
-        x=Triangle.columns,
-        y=Triangle.index,
-        colorscale='Viridis'))
-    st.plotly_chart(fig)
+    st.write(Triangle)
+    fig, ax = plt.subplots(figsize=(12, 6))
+    Triangle.T.plot(ax=ax)
+    st.pyplot(fig)
+
+    # Calcul d'ultim et IBNR
+    Triangle['ultim'] = Triangle['10']*delta.prod()
+    Triangle['IBNR'] = Triangle['ultim'].subtract(Triangle['10'])
+
+    # Affichage des résultats finaux
+    st.write("Résultats finaux:")
+    st.write(Triangle)
+    st.write("Somme:")
+    st.write(Triangle.sum())
+
+# Fonction pour le modèle du Mack Chain Ladder
+def mack_chain_ladder_model():
+    st.subheader("Modèle du Mack Chain Ladder")
+
+    # Manipulation des données
+    Triangle = pd.DataFrame(Data_Scor)
+    Triangle.set_index(Triangle['origine'], inplace=True)
+    del Triangle['origine']
+
+    # Affichage du Triangle
+
+
+    st.write("Triangle:")
+    st.write(Triangle)
+    fig, ax = plt.subplots(figsize=(12, 6))
+    Triangle.T.plot(ax=ax)
+    st.pyplot(fig)
+
+    # Utilisation de Mack Chain Ladder
+    facteurs = []
+    for col in Triangle.columns[:-1]:
+        facteurs.append(Triangle[str(int(col) + 1)].sum() / Triangle[col][:-int(col)].sum())
+    facteurs = np.array(facteurs)
+
+    # Affichage des facteurs
+    st.write("Facteurs:")
+    per_dev = np.array([(i+1) for i in range(9)])
+    fig, ax = plt.subplots(figsize=(12, 6))
+    ax.plot(per_dev, facteurs)
+    ax.set_xlabel('Période du Développement')
+    ax.set_ylabel('Facteurs')
+    st.pyplot(fig)
+
+    # Plot des facteurs (Scatter après application de la régression linéaire)
+    st.write("Plot des facteurs (régression linéaire):")
+    fig, ax = plt.subplots(figsize=(12, 6))
+    ax.set_title('Plot des facteurs')
+    ax.set_xlabel('Période de Développement')
+    ax.set_ylabel('Facteur')
+    sns.regplot(x=per_dev, y=np.log(facteurs-1), ax=ax)
+    st.pyplot(fig)
+
+    # Compléter le Triangle
+    for i, col in enumerate(Triangle.columns[1:]):
+        for j in range(i+1):
+            Triangle[col].at[2021-j] = facteurs[i] * Triangle[str(int(col)-1)].at[2021-j]
+    Triangle1 = Triangle
+
+    # Fitting du modèle
+    model = LinearRegression()
+    model.fit(per_dev.reshape(-1, 1), np.log(facteurs-1))
+    delta = np.array([(i+10) for i in range(101)])
+    delta = np.exp(model.intercept_ + model.coef_ * delta) + 1
 
     # Calcul de sigma
     t = np.array(Triangle)
@@ -114,7 +166,9 @@ def chain_ladder_method():
     st.write(Triangle.sum())
 
 # Code principal
-st.title("Étude des Méthodes Chain Ladder")
+st.title
+
+("Étude des Méthodes Chain Ladder")
 
 # Importation des données
 
@@ -132,8 +186,13 @@ Data_Scor = {
     '9': [1866200, 1675700, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan],
     '10': [1886100, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan]
 }
+Data_Scor = pd.DataFrame(Data_Scor)
 
-# Sidebar
-option = st.sidebar.selectbox("Sélectionnez la méthode", ["Chain Ladder"])
-if option == "Chain Ladder":
+# Sélection de la méthode
+method = st.sidebar.selectbox("Sélectionnez une méthode", ("Méthode Chain Ladder", "Modèle du Mack Chain Ladder"))
+
+# Exécution de la méthode sélectionnée
+if method == "Méthode Chain Ladder":
     chain_ladder_method()
+elif method == "Modèle du Mack Chain Ladder":
+    mack_chain_ladder_model()
