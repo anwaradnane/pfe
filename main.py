@@ -38,18 +38,22 @@ for col in Triangle.columns[:-1]:
     facteurs.append(Triangle[str(int(col) + 1)].sum() / Triangle[col][:-int(col)].sum())
 facteurs = np.array(facteurs)
 
-# Affichage des Facteurs sous forme de scatter plot:
-st.write("Facteurs:")
+# Plot des Facteurs en utilisant des scatter plots:
+st.write("Plot des Facteurs:")
 fig, ax = plt.subplots(figsize=(12, 6))
-ax.scatter(range(1, 10), facteurs)
-ax.set_xlabel('Periode du Developpement')
-ax.set_ylabel('Facteurs')
+ax.set_title('Plot des Facteurs')
+ax.set_xlabel('Periode_Developpement')
+ax.set_ylabel('Facteur')
+sns.scatterplot(x=np.arange(1, 10), y=facteurs)
 st.pyplot(fig)
 
 # Fitting du Model:
 model = LinearRegression()
 model.fit(np.arange(1, 10).reshape(-1, 1), np.log(facteurs - 1))
-delta = np.exp(model.intercept_ + model.coef_ * np.arange(10, 111)) + 1
+delta = np.array([(i + 10) for i in range(101)])
+delta = np.exp(model.intercept_ + model.coef_ * delta) + 1
+
+# Affichage du Fitting du Model - Delta:
 st.write("Fitting du Model - Delta:")
 st.write(delta)
 st.write("Produit de Delta:")
@@ -78,11 +82,10 @@ Triangle['IBNR'] = Triangle['ultim'].subtract(Triangle['10'])
 st.write("Triangle avec ultim et IBNR:")
 st.write(Triangle)
 
-# Affichage des totaux:
+# Affichage des indices:
 st.write("Indices:")
 indices = pd.DataFrame({
-    'Somme IBNR': [Triangle['IBNR'].sum()],
-    'Somme ultim': [Triangle['ultim'].sum()],
-    'Somme 10': [Triangle['10'].sum()]
+    'Indice': ['Somme IBNR', 'Somme ultim'],
+    'Valeur': [Triangle['IBNR'].sum(), Triangle['ultim'].sum()]
 })
 st.write(indices)
