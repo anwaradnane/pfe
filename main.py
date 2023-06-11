@@ -186,14 +186,22 @@ Data_Scor = pd.DataFrame(Data_Scor)
 # Sélection de la méthode
 method = st.sidebar.selectbox("Sélectionnez une méthode", ("Méthode Chain Ladder", "Modèle du Mack Chain Ladder"))
 
-image1 = Image.open("aaa.png")
-image2 = Image.open("aaaa.png")
-image_width = 300
-# Affichage de l'image 1 en haut de la page avec une largeur de 300 pixels
-st.image(image1, caption='', width=image_width, use_column_width=False)
+# Définition des images
+image_aaa = 'aaa.png'
+image_aaaa = 'aaaa.png'
 
-# Affichage de l'image 2 en haut de la page avec une largeur de 300 pixels
-st.image(image2, caption='', width=image_width, use_column_width=False)
+# Division de l'espace horizontal en deux colonnes
+col1, col2 = st.beta_columns(2)
+
+# Affichage de l'image 'aaa' dans la première colonne (en haut à gauche)
+with col1:
+    st.image(image_aaa, caption='', width=300)
+
+# Affichage de l'image 'aaaa' dans la deuxième colonne (en haut à droite)
+with col2:
+    st.image(image_aaaa, caption='', width=300)
+
+
 
 
 # Exécution de la méthode sélectionnée
