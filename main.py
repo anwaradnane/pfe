@@ -186,20 +186,31 @@ Data_Scor = pd.DataFrame(Data_Scor)
 # Sélection de la méthode
 method = st.sidebar.selectbox("Sélectionnez une méthode", ("Méthode Chain Ladder", "Modèle du Mack Chain Ladder"))
 
+import streamlit as st
+from PIL import Image
+
 # Définition des images
 image_aaa = 'aaa.png'
-image_aaaa = 'aaaa.jpg'
+image_aaaa = 'aaaa.j[g'
+
+# Redimensionnement des images
+size = (300, 300)  # Taille souhaitée des images
+image_aaa_resized = Image.open(image_aaa).resize(size)
+image_aaaa_resized = Image.open(image_aaaa).resize(size)
 
 # Division de l'espace horizontal en deux colonnes
 col1, col2 = st.beta_columns(2)
 
-# Affichage de l'image 'aaa' dans la première colonne (en haut à gauche)
+# Affichage de l'image 'aaa' redimensionnée dans la première colonne (en haut à gauche)
 with col1:
-    st.image(image_aaa, caption='', width=300)
+    st.image(image_aaa_resized, caption='')
 
-# Affichage de l'image 'aaaa' dans la deuxième colonne (en haut à droite)
+# Affichage de l'image 'aaaa' redimensionnée dans la deuxième colonne (en haut à droite)
 with col2:
-    st.image(image_aaaa, caption='', width=300)
+    st.image(image_aaaa_resized, caption='')
+
+# Suite de votre code...
+
 
 
 
