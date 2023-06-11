@@ -130,7 +130,7 @@ def mack_chain_ladder_model():
     # Calcul de sigma
     t = np.array(Triangle)
     sigma = []
-    for j in range(9):
+    for j in range(8):
         s = 0
         for i in range(10):
             s += t[i, j] * (((t[i, j+1] / t[i, j]) - facteurs[j])**2)
