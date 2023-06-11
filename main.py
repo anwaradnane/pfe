@@ -135,7 +135,7 @@ def mack_chain_ladder_model():
         for i in range(10):
             s += t[i, j] * (((t[i, j+1] / t[i, j]) - facteurs[j])**2)
         sigma.append(np.sqrt(s / (9-j)))
-    sigma.append(math.sqrt(min(((sigma[7])**2)/(sigma[6])**2,min(((sigma[6])**2),((sigma[7])**2)))))
+    sigma.append(np.sqrt(min(((sigma[7])**2)/(sigma[6])**2,min(((sigma[6])**2),((sigma[7])**2)))))
 
     # Compléter le Triangle
     for i, col in enumerate(Triangle.columns[1:]):
