@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.linear_model import LinearRegression
+from PIL import Image
 
 # Fonction pour le modèle de la méthode Chain Ladder
 def chain_ladder_method():
@@ -184,6 +185,12 @@ Data_Scor = pd.DataFrame(Data_Scor)
 
 # Sélection de la méthode
 method = st.sidebar.selectbox("Sélectionnez une méthode", ("Méthode Chain Ladder", "Modèle du Mack Chain Ladder"))
+
+image1 = Image.open("aaa.png")
+image2 = Image.open("aaaa.png")
+
+st.image(image1, caption='Image 1', use_column_width=True)
+st.image(image2, caption='Image 2', use_column_width=True)
 
 # Exécution de la méthode sélectionnée
 if method == "Méthode Chain Ladder":
