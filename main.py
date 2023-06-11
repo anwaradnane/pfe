@@ -191,7 +191,7 @@ from PIL import Image
 
 # Définition des images
 image_aaa = 'aaa.png'
-image_aaaa = 'aaaa.j[g'
+image_aaaa = 'aaaa.jpg'
 
 # Redimensionnement des images
 size = (300, 300)  # Taille souhaitée des images
