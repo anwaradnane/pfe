@@ -38,9 +38,13 @@ for col in Triangle.columns[:-1]:
     facteurs.append(Triangle[str(int(col) + 1)].sum() / Triangle[col][:-int(col)].sum())
 facteurs = np.array(facteurs)
 
-# Affichage des Facteurs:
+# Affichage des Facteurs sous forme de scatter plot:
 st.write("Facteurs:")
-st.line_chart(pd.DataFrame({'Periode du Developpement': range(1, 10), 'Facteurs': facteurs}))
+fig, ax = plt.subplots(figsize=(12, 6))
+ax.scatter(range(1, 10), facteurs)
+ax.set_xlabel('Periode du Developpement')
+ax.set_ylabel('Facteurs')
+st.pyplot(fig)
 
 # Fitting du Model:
 model = LinearRegression()
@@ -74,6 +78,11 @@ Triangle['IBNR'] = Triangle['ultim'].subtract(Triangle['10'])
 st.write("Triangle avec ultim et IBNR:")
 st.write(Triangle)
 
-# Affichage du total:
-st.write("Total:")
-st.write(Triangle.sum())
+# Affichage des totaux:
+st.write("Indices:")
+indices = pd.DataFrame({
+    'Somme IBNR': [Triangle['IBNR'].sum()],
+    'Somme ultim': [Triangle['ultim'].sum()],
+    'Somme 10': [Triangle['10'].sum()]
+})
+st.write(indices)
