@@ -192,24 +192,24 @@ method = st.sidebar.selectbox("Sélectionnez une méthode", ("Méthode Chain Lad
 from PIL import Image
 
 # Définition des images
-image_aaa = 'aaa.png'
-image_aaaa = 'aaaa.jpg'
+image_1 = 'ENSA LOGO.png'
+image_2 = 'SCOR LOGO.jpg'
 
 # Redimensionnement des images
 size = (300, 100)  # Taille souhaitée des images
-image_aaa_resized = Image.open(image_aaa).resize(size)
-image_aaaa_resized = Image.open(image_aaaa).resize(size)
+image_1_resized = Image.open(image_1).resize(size)
+image_2_resized = Image.open(image_2).resize(size)
 
 # Division de l'espace horizontal en deux colonnes
 col1, col2 = st.beta_columns(2)
 
 # Affichage de l'image 'aaa' redimensionnée dans la première colonne (en haut à gauche)
 with col1:
-    st.image(image_aaa_resized, caption='')
+    st.image(image_1_resized, caption='')
 
 # Affichage de l'image 'aaaa' redimensionnée dans la deuxième colonne (en haut à droite)
 with col2:
-    st.image(image_aaaa_resized, caption='')
+    st.image(image_2_resized, caption='')
 
 # Suite de votre code...
 
