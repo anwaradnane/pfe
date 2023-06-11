@@ -140,7 +140,7 @@ def mack_chain_ladder_model():
     # Compléter le Triangle
     for i, col in enumerate(Triangle.columns[1:]):
         for j in range(i+1):
-            Triangle[col].at[2021-j] = Triangle[str(int(col)-1)].at[2021-j] + (sigma[j]*math.sqrt(Triangle[str(int(col)-1)].at[2021-j]))
+            Triangle[col].at[2021-j] = Triangle[str(int(col)-1)].at[2021-j] + (sigma[j]*np.sqrt(Triangle[str(int(col)-1)].at[2021-j]))
          
 
     # Affichage des résultats
