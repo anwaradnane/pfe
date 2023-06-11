@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.linear_model import LinearRegression
-from PIL import Image
+#from PIL import Image
 
 # Fonction pour le modèle de la méthode Chain Ladder
 def chain_ladder_method():
@@ -187,27 +187,27 @@ Data_Scor = pd.DataFrame(Data_Scor)
 method = st.sidebar.selectbox("Sélectionnez une méthode", ("Méthode Chain Ladder", "Modèle du Mack Chain Ladder"))
 
 
-from PIL import Image
+#from PIL import Image
 
 # Définition des images
-image_aaa = 'aaa.png'
-image_aaaa = 'aaaa.jpg'
+#image_aaa = 'aaa.png'
+#image_aaaa = 'aaaa.jpg'
 
 # Redimensionnement des images
-size = (300, 100)  # Taille souhaitée des images
-image_aaa_resized = Image.open(image_aaa).resize(size)
-image_aaaa_resized = Image.open(image_aaaa).resize(size)
+#size = (300, 100)  # Taille souhaitée des images
+#image_aaa_resized = Image.open(image_aaa).resize(size)
+#image_aaaa_resized = Image.open(image_aaaa).resize(size)
 
 # Division de l'espace horizontal en deux colonnes
-col1, col2 = st.beta_columns(2)
+#col1, col2 = st.beta_columns(2)
 
 # Affichage de l'image 'aaa' redimensionnée dans la première colonne (en haut à gauche)
-with col1:
-    st.image(image_aaa_resized, caption='')
+#with col1:
+    #st.image(image_aaa_resized, caption='')
 
 # Affichage de l'image 'aaaa' redimensionnée dans la deuxième colonne (en haut à droite)
-with col2:
-    st.image(image_aaaa_resized, caption='')
+#with col2:
+    #st.image(image_aaaa_resized, caption='')
 
 # Suite de votre code...
 
