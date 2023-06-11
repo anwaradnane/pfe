@@ -194,7 +194,7 @@ image_aaa = 'aaa.png'
 image_aaaa = 'aaaa.jpg'
 
 # Redimensionnement des images
-size = (300, 300)  # Taille souhaitée des images
+size = (150, 150)  # Taille souhaitée des images
 image_aaa_resized = Image.open(image_aaa).resize(size)
 image_aaaa_resized = Image.open(image_aaaa).resize(size)
 
