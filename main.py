@@ -1,4 +1,3 @@
-
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -56,6 +55,7 @@ def chain_ladder_method():
     for i, col in enumerate(Triangle.columns[1:]):
         for j in range(i+1):
             Triangle[col].at[2021-j] = facteurs[i] * Triangle[str(int(col)-1)].at[2021-j]
+    
 
     # Affichage du Triangle complété
     st.write("Triangle complété:")
@@ -84,8 +84,6 @@ def mack_chain_ladder_model():
     del Triangle['origine']
 
     # Affichage du Triangle
-
-
     st.write("Triangle:")
     st.write(Triangle)
     fig, ax = plt.subplots(figsize=(12, 6))
@@ -115,13 +113,13 @@ def mack_chain_ladder_model():
     ax.set_ylabel('Facteur')
     sns.regplot(x=per_dev, y=np.log(facteurs-1), ax=ax)
     st.pyplot(fig)
-
+    
     # Compléter le Triangle
     for i, col in enumerate(Triangle.columns[1:]):
         for j in range(i+1):
             Triangle[col].at[2021-j] = facteurs[i] * Triangle[str(int(col)-1)].at[2021-j]
     Triangle1 = Triangle
-
+    
     # Fitting du modèle
     model = LinearRegression()
     model.fit(per_dev.reshape(-1, 1), np.log(facteurs-1))
@@ -164,9 +162,7 @@ def mack_chain_ladder_model():
     st.write(Triangle.sum())
 
 # Code principal
-st.title
-
-("Étude des Méthodes Chain Ladder")
+st.title("Étude des Méthodes Chain Ladder")
 
 # Importation des données
 
