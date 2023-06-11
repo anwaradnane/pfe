@@ -55,18 +55,18 @@ def chain_ladder_method():
     for i, col in enumerate(Triangle.columns[1:]):
         for j in range(i+1):
             Triangle[col].at[2021-j] = facteurs[i] * Triangle[str(int(col)-1)].at[2021-j]
-    Triangle1 = Triangle
+    
 
     # Affichage du Triangle complété
     st.write("Triangle complété:")
     st.write(Triangle)
     fig, ax = plt.subplots(figsize=(12, 6))
-    Triangle1.T.plot(ax=ax)
+    Triangle.T.plot(ax=ax)
     st.pyplot(fig)
 
     # Calcul d'ultim et IBNR
-    Triangle1['ultim'] = Triangle1['10']
-    Triangle1['IBNR'] = Triangle1['ultim'].subtract(Triangle1['10'])
+    Triangle['ultim'] = Triangle['10']*delta.prod()
+    Triangle['IBNR'] = Triangle['ultim'].subtract(Triangle['10'])
 
     # Affichage des résultats finaux
     st.write("Résultats finaux:")
@@ -152,7 +152,7 @@ def mack_chain_ladder_model():
     st.write(delta.prod())
 
     # Calcul d'ultim et IBNR
-    Triangle['ultim'] = Triangle['10']
+    Triangle['ultim'] = Triangle['10']*delta.prod()
     Triangle['IBNR'] = Triangle['ultim'].subtract(Triangle['10'])
 
     # Affichage des résultats finaux
