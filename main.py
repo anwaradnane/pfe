@@ -51,26 +51,6 @@ def chain_ladder_method():
     delta = np.array([(i+10) for i in range(101)])
     delta = np.exp(model.intercept_ + model.coef_ * delta) + 1
 
-    # Calcul de sigma
-    t = np.array(Triangle)
-    sigma = []
-    for j in range(9):
-        s = 0
-        for i in range(10):
-            s += t[i, j] * (((t[i, j+1] / t[i, j]) - facteurs[j])**2)
-        sigma.append(np.sqrt(s / (9-j)))
-
-    # Affichage des résultats
-    st.write("Résultats de la méthode Chain Ladder:")
-    st.write("Coefficients de régression:")
-    st.write(f"Intercept: {model.intercept_}, Coefficient: {model.coef_}")
-    st.write("Sigma:")
-    st.write(sigma)
-    st.write("Delta:")
-    st.write(delta)
-    st.write("Produit de Delta:")
-    st.write(delta.prod())
-
     # Compléter le Triangle
     for i, col in enumerate(Triangle.columns[1:]):
         for j in range(i+1):
@@ -79,7 +59,7 @@ def chain_ladder_method():
 
     # Affichage du Triangle complété
     st.write("Triangle complété:")
-    st.write(Triangle1)
+    st.write(Triangle)
     fig, ax = plt.subplots(figsize=(12, 6))
     Triangle1.T.plot(ax=ax)
     st.pyplot(fig)
@@ -90,9 +70,9 @@ def chain_ladder_method():
 
     # Affichage des résultats finaux
     st.write("Résultats finaux:")
-    st.write(Triangle1)
+    st.write(Triangle)
     st.write("Somme:")
-    st.write(Triangle1.sum())
+    st.write(Triangle.sum())
 
 # Fonction pour le modèle du Mack Chain Ladder
 def mack_chain_ladder_model():
@@ -133,7 +113,13 @@ def mack_chain_ladder_model():
     ax.set_ylabel('Facteur')
     sns.regplot(x=per_dev, y=np.log(facteurs-1), ax=ax)
     st.pyplot(fig)
-
+    
+    # Compléter le Triangle
+    for i, col in enumerate(Triangle.columns[1:]):
+        for j in range(i+1):
+            Triangle[col].at[2021-j] = facteurs[i] * Triangle[str(int(col)-1)].at[2021-j]
+    Triangle1 = Triangle
+    
     # Fitting du modèle
     model = LinearRegression()
     model.fit(per_dev.reshape(-1, 1), np.log(facteurs-1))
