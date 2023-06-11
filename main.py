@@ -188,9 +188,13 @@ method = st.sidebar.selectbox("Sélectionnez une méthode", ("Méthode Chain Lad
 
 image1 = Image.open("aaa.png")
 image2 = Image.open("aaaa.png")
+image_width = 300
+# Affichage de l'image 1 en haut de la page avec une largeur de 300 pixels
+st.image(image1, caption='', width=image_width, use_column_width=False)
 
-st.image(image1, caption='Image 1', use_column_width=True)
-st.image(image2, caption='Image 2', use_column_width=True)
+# Affichage de l'image 2 en haut de la page avec une largeur de 300 pixels
+st.image(image2, caption='', width=image_width, use_column_width=False)
+
 
 # Exécution de la méthode sélectionnée
 if method == "Méthode Chain Ladder":
